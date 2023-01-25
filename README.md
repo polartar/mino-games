@@ -2,6 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Living Site
 
+https://minogames-nfts.netlify.app/
 
 ## How to Install
  
