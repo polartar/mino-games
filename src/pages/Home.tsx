@@ -10,8 +10,7 @@ import { useWeb3React } from "@web3-react/core";
 import { INft } from "../types/nft";
 import NftItem from "../components/NftItem";
 
-const DISPLAYED_IDS = [126, 244, 92, 37, 45, 375, 66, 102, 62, 52, 36, 17]
-const BASE_URI = 'https://tunes.mypinata.cloud/ipfs/QmSXTdZb3wfFga4FGmV8AFnGY2JVoJAJY3GF54VxTeuLhZ/'
+const BASE_URI = 'https://clonex-assets.rtfkt.com/'
 
 export default function Home() {
   const { account } = useWeb3React();
@@ -19,23 +18,38 @@ export default function Home() {
   const [nfts, setNfts] = useState<INft[]>([]);
 
   useEffect(() => {
-    if (account) {
-      setIsLoading(true);
-
+    const getMetadata = (tokenIds: number[]) => {
       // get metadata of the token IDs
-      const promises = DISPLAYED_IDS.map(id => {
-        return axios.get(`${BASE_URI}${id}`);
+      const promises = tokenIds.map(id => {
+        return axios.get(`${BASE_URI}${id + 1}`);
       })
 
       Promise.all(promises).then(values => {
-        const newValues = values.map((value: any) => ({ name: value.data.name, description: value.data.description, image: value.data.image }))
+        const newValues: INft[] = values.map((value: any) => ({ name: value.data.name, description: value.data.description, image: value.data.image }))
         setNfts(newValues);
         setIsLoading(false);
       });
+    }
+    if (account) {
+      setIsLoading(true);
 
+      getMetadata(Array.from(Array(10).keys()));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account])
+
+
+  /**
+   * Store the user state in the database
+   * @param data user data that will be stored in the database
+   */
+  /*
+  const storeUserState = (data: any) => {
+    axios.post(`${process.env.REACT_APP_SERVER_URL}/api/user`, {
+      ...data
+    })
+  }
+  */
 
   return (
     <React.Fragment>
@@ -62,9 +76,7 @@ export default function Home() {
                 }
               </>
           }
-
         </Box>
-
       </Container>
     </React.Fragment>
   );

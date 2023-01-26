@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useWeb3React } from "@web3-react/core";
 import { AppBar, Box, Toolbar, Typography, Button, Modal } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { injectedConnector, walletconnect } from "../connectors";
+import { injectedConnector, walletconnect } from "../web3Connect/connectors";
 
 const useStyles = makeStyles({
   main: {
@@ -51,10 +51,12 @@ export default function ButtonAppBar() {
   const onConnectWallet = () => {
     setOpen(true);
   };
+
   const onConnectMetaMask = () => {
     activate(injectedConnector);
     handleClose();
   };
+
   const onConnectWalletConnect = () => {
     activate(walletconnect);
     handleClose();
@@ -71,6 +73,7 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Mino Games
           </Typography>
+
           {account === undefined ? (
             <Button variant="contained" size="medium" onClick={onConnectWallet} className={classes.buttonConnect}>
               Connect Wallet
@@ -85,6 +88,7 @@ export default function ButtonAppBar() {
           )}
         </Toolbar>
       </AppBar>
+
       <Modal
         open={open}
         onClose={handleClose}
