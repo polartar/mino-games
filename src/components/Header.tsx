@@ -46,7 +46,7 @@ export default function ButtonAppBar() {
       alert("Please select Ethereum network");
       deactivate();
     }
-  }, [account, chainId, deactivate]);
+  }, [chainId, deactivate]);
 
   const onConnectWallet = () => {
     setOpen(true);

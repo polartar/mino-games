@@ -25,8 +25,11 @@ export default function Home() {
       })
 
       Promise.all(promises).then(values => {
-        const newValues: INft[] = values.map((value: any) => ({ name: value.data.name, description: value.data.description, image: value.data.image }))
+        const newValues: INft[] = values.map((value: any) =>
+          ({ name: value.data.name, description: value.data.description, image: value.data.image })
+        )
         setNfts(newValues);
+
         setIsLoading(false);
       });
     }
