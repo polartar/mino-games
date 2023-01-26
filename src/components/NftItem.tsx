@@ -1,5 +1,6 @@
 import { INft } from '../types/nft';
 import { makeStyles } from '@mui/styles';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const useStyles = makeStyles({
     root: {
@@ -24,7 +25,12 @@ const NftItem = ({ nft }: { nft: INft }) => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <img src={nft.image} alt={nft.name} className={classes.img} />
+            <LazyLoadImage
+                effect="blur"
+                className={classes.img}
+                placeholderSrc={"Loading image"}
+                src={nft.image} />
+
             <div className={classes.text}>{nft.name}</div>
         </div>
     )
